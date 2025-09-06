@@ -1,0 +1,346 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div style="max-width: 1000px; margin: 40px auto; background-color: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.1); font-family: Arial, sans-serif;">
+
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; align-items: flex-start;">
+
+        <!-- Profile Display Left Side -->
+        <div style="flex: 1; min-width: 300px;">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h1 style="font-size: 28px; color: #333; margin-bottom: 20px;">My Profile</h1>
+                <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 3px solid #007bff; margin: auto;">
+                    {% if profile.profile_picture %}
+                        <img src="{{ profile.profile_picture.url }}" alt="Profile image" style="width: 100%; height: 100%; object-fit: cover;">
+                    {% else %}
+                        <img src="{% static 'default-profile.png' %}" alt="Default image" style="width: 100%; height: 100%; object-fit: cover;">
+                    {% endif %}
+                </div>
+                <p style="margin-top: 10px; color: #888;">Profile Image</p>
+            </div>
+
+            <div style="font-size: 16px; line-height: 1.8; color: #444; padding-left: 10px;">
+                <p><strong>Email:</strong> {{ request.user.email }}</p>
+                <p><strong>Phone:</strong> {{ profile.phone_number }}</p>
+                <p><strong>Address 1:</strong> {{ profile.address_line_1 }}</p>
+                <p><strong>Address 2:</strong> {{ profile.address_line_2 }}</p>
+                <p><strong>City:</strong> {{ profile.city }}</p>
+                <p><strong>State:</strong> {{ profile.state }}</p>
+                <p><strong>Country:</strong> {{ profile.country }}</p>
+                <p><strong>PIN Code:</strong> {{ profile.pin_code }}</p>
+                <p><strong>Date Joined:</strong> {{ profile.date_joind }}</p>
+            </div>
+        </div>
+
+        <!-- Edit Profile Right Side -->
+        <div style="flex: 1; min-width: 300px;">
+            <h3 style="font-size: 24px; color: #333; margin-bottom: 20px; text-align: center;">Edit Profile</h3>
+            <form method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 15px;">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div style="display: flex; flex-direction: column;">
+                        <label for="{{ field.id_for_label }}" style="margin-bottom: 6px; font-weight: bold; color: #555;">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                
+                <button type="submit" style="padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">
+                    Update Profile
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Inline CSS to style the form fields -->
+<style>
+    input[type="text"],
+    input[type="file"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+        background-color: #f9f9f9;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="file"]:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        background-color: #fff;
+    }
+</style>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div style="max-width: 700px; margin: 40px auto; background-color: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.1); font-family: Arial, sans-serif;">
+
+    <!-- My Profile Title with Image -->
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="font-size: 32px; color: #333; margin-bottom: 20px;">My Profile</h1>
+        <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 3px solid #007bff; margin: auto;">
+            {% if profile.profile_picture %}
+                <img src="{{ profile.profile_picture.url }}" alt="Profile image" style="width: 100%; height: 100%; object-fit: cover;">
+            {% else %}
+                <img src="{% static 'default-profile.png' %}" alt="Default image" style="width: 100%; height: 100%; object-fit: cover;">
+            {% endif %}
+        </div>
+        <p style="margin-top: 10px; color: #888;">Profile Image</p>
+    </div>
+
+    <hr style="margin: 30px 0;">
+
+    <!-- Profile Info -->
+    <div style="font-size: 16px; line-height: 1.8; color: #444;">
+        <p><strong>Email:</strong> {{ request.user.email }}</p>
+        <p><strong>Phone:</strong> {{ profile.phone_number }}</p>
+        <p><strong>Address 1:</strong> {{ profile.address_line_1 }}</p>
+        <p><strong>Address 2:</strong> {{ profile.address_line_2 }}</p>
+        <p><strong>City:</strong> {{ profile.city }}</p>
+        <p><strong>State:</strong> {{ profile.state }}</p>
+        <p><strong>Country:</strong> {{ profile.country }}</p>
+        <p><strong>PIN Code:</strong> {{ profile.pin_code }}</p>
+        <p><strong>Date Joined:</strong> {{ profile.date_joind }}</p>
+    </div>
+
+    <hr style="margin: 30px 0;">
+
+    <!-- Edit Form -->
+    <div>
+        <h3 style="font-size: 24px; color: #333; margin-bottom: 20px;">Edit Profile</h3>
+        <form method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 15px;">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" style="padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">
+                Update Profile
+            </button>
+        </form>
+    </div>
+</div>
+
+{% endblock %} {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1> My Profile </h1>
+<div style="text-align: center; margin-bottom: 30px;">
+    <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 3px solid #007bff; margin: auto;">
+        {% if profile.profile_picture %}
+            <img src="{{ profile.profile_picture.url }}" alt="Profile image" style="width: 100%; height: 100%; object-fit: cover;">
+        {% else %}
+           <p>No Profile Picture</p>
+        {% endif %}
+    </div>
+    <p style="margin-top: 10px; color: #888;">Profile Image</p>
+</div>
+<hr>
+
+<p><strong>Email:</strong> {{ request.user.email }}</p>
+<p><strong>Phone:</strong> {{ profile.phone_number }}</p>
+<p><strong>Address 1:</strong> {{ profile.address_line_1 }}</p>
+<p><strong>Address 2:</strong> {{ profile.address_line_2 }}</p>
+<p><strong>City:</strong> {{ profile.city }}</p>
+<p><strong>State:</strong> {{ profile.state }}</p>
+<p><strong>Country:</strong> {{ profile.country }}</p>
+<p><strong>PIN Code:</strong> {{ profile.pin_code }}</p>
+<p><strong>Date Joined:</strong> {{ profile.date_joind }}</p>
+
+<hr>
+
+<h3>Edit Profile</h3>
+<form method='POST' enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit"> Update Profile </button>
+
+</form>
+
+{% endblock %} {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} <div style="max-width: 800px; margin: 40px auto; background-color: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.08); font-family: Arial, sans-serif;">
+
+  
+    <div style="text-align: center; margin-bottom: 30px;">
+        <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 3px solid #007bff; margin: auto;">
+            <img src="/media/profile_pictures/user.jpg" alt="Profile image" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <p style="margin-top: 10px; color: #888;">Profile Image</p>
+    </div>
+
+    
+    <form method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 20px;">
+      
+        {% csrf_token %}
+
+    
+        <input type="file" name="profile_picture" accept="image/*"
+               style="padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+
+     
+        <input type="text" name="phone_number" placeholder="Phone Number"
+               style="padding: 12px; border: 1px solid #ccc; border-radius: 8px;">
+
+
+        <input type="text" name="address_line_1" placeholder="Address Line 1"
+               style="padding: 12px; border: 1px solid #ccc; border-radius: 8px;">
+
+
+        <input type="text" name="address_line_2" placeholder="Address Line 2"
+               style="padding: 12px; border: 1px solid #ccc; border-radius: 8px;">
+
+        <input type="text" name="city" placeholder="City"
+               style="padding: 12px; border: 1px solid #ccc; border-radius: 8px;">
+
+
+        <input type="text" name="state" placeholder="State"
+               style="padding: 12px; border: 1px solid #ccc; border-radius: 8px;">
+
+  
+        <input type="text" name="country" placeholder="Country"
+               style="padding: 12px; border: 1px solid #ccc; border-radius: 8px;">
+
+   
+        <input type="text" name="pin_code" placeholder="Pin Code"
+               style="padding: 12px; border: 1px solid #ccc; border-radius: 8px;">
+
+        
+        <button type="submit"
+                style="margin-top: 20px; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">
+            Save Profile
+        </button>
+    </form>
+</div> {% endcomment %}
+
+
+
+{% comment %} <div style="max-width: 700px; margin: 50px auto; padding: 30px; background: #ffffff; border-radius: 16px; box-shadow: 0 0 20px rgba(0,0,0,0.08); font-family: 'Segoe UI', sans-serif;">
+    <h2 style="text-align: center; font-weight: 600; margin-bottom: 30px; color: #333;">Edit Profile</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">Upload Profile Picture</label>
+            <input type="file" name="profile_picture" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">Phone Number</label>
+            <input type="text" name="phone_number" placeholder="Enter phone number" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+        </div>
+
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">Address Line 1</label>
+            <input type="text" name="address_line_1" placeholder="Street, Area, Locality" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+        </div>
+
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">Address Line 2</label>
+            <input type="text" name="address_line_2" placeholder="Apartment, Floor, Landmark" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">City</label>
+            <input type="text" name="city" placeholder="Enter city name" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">State</label>
+            <input type="text" name="state" placeholder="Enter state" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+        </div>
+
+ 
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">Country</label>
+            <input type="text" name="country" placeholder="Enter country" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+        </div>
+
+     
+        <div style="margin-bottom: 30px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">Pin Code</label>
+            <input type="text" name="pin_code" placeholder="Enter pin code" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+        </div>
+
+    
+        <button type="submit" style="width: 100%; padding: 12px; background-color: #007bff; color: #fff; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease;">
+            Save Changes
+        </button>
+    </form>
+</div> {% endcomment %}

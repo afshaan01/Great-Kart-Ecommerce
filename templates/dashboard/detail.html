@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div style="max-width: 900px; margin: 30px auto; padding: 20px; font-family: Arial, sans-serif;">
+    <h2 style="text-align: center; margin-bottom: 30px; font-size: 28px; color: #333;">Your Orders</h2>
+
+    {% for order in order_prod %}
+    <div style="background: #f9f9f9; border: 1px solid #ddd; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 20px;">
+        
+        <!-- Image -->
+        <img src="{{ order.product_image }}" alt="Product Image" style="width: 150px; height: 150px; object-fit: cover; border-radius: 10px; border: 1px solid #ccc;" />
+
+        <!-- Product Details -->
+        <div>
+            <h3 style="font-size: 22px; color: #007bff; margin-bottom: 10px;">Product : {{ order.product_names }}</h3>
+
+            <p style="margin: 0; color: #555;">
+                <strong>Variations:</strong>
+                {% for variation in order.variation_list %}
+                    <span style="background-color: #e3f2fd; color: #1976d2; padding: 3px 8px; border-radius: 6px; margin-right: 6px; font-size: 14px;">
+                        {{ variation }}
+                    </span>
+                {% endfor %}
+            </p>
+            <br>
+            <h4 style="font-size: 18px; color: #28a745;">Price: ₹{{ order.product_price }}</h4>
+        </div>
+    </div>
+    {% empty %}
+    <p style="text-align:center; color: #999;">No orders found.</p>
+    {% endfor %}
+</div>
+
+
+
+{% comment %} <div style="max-width: 900px; margin: 30px auto; padding: 20px; font-family: Arial, sans-serif;">
+    <h2 style="text-align: center; margin-bottom: 30px; font-size: 28px; color: #333;">Your Orders</h2>
+
+    {% for order in order_prod %}
+    <div style="background: #f9f9f9; border: 1px solid #ddd; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+        
+     <img src="{{ order.product_image }}" height="200px" alt="Product Image" class="product-img" />
+
+       
+        <h3 style="font-size: 22px; color: #007bff; margin-bottom: 10px;">Product : {{ order.product_names }}</h3>
+
+   
+        <div style="padding-left: 10px;">
+            <p style="margin: 0; color: #555;">
+                <strong>Variations:</strong> {{ order.variation_list }}
+            </p>
+        </div>
+
+    </div>
+    {% empty %}
+    <p style="text-align:center; color: #999;">No orders found.</p>
+    {% endfor %}
+</div> {% endcomment %}
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% for order in order_prod %}
+
+
+{{order.product_names}}
+{{order.variation_list}}
+
+
+
+{% endfor %} {% endcomment %}

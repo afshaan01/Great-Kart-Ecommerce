@@ -1,0 +1,48 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Order History - GreatKart</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="max-w-5xl mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center">My Order History</h1>
+
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+      <table class="min-w-full table-auto text-left">
+        <thead class="bg-gray-200 text-gray-700">
+          <tr>
+            <th class="px-6 py-4">Order ID</th>
+            <th class="px-6 py-4">Date</th>
+            <th class="px-6 py-4">Total</th>
+            <th class="px-6 py-4">Status</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-600">
+          <!-- Example order row -->
+           {% for order in orders %}
+          <tr class="border-t">
+
+            <td class="px-6 py-4">
+            <a href="{% url 'order_detail' order.id %}" style="color:purple">{{order.order_number}}</a>
+            
+            </td>
+
+
+            <td class="px-6 py-4">{{order.created_at}}
+            </td>       
+            <td class="px-6 py-4">${{order.total}}</td>
+            <td class="px-6 py-4 text-green-600 font-semibold">{{order.status}}</td>
+          </tr>
+          {% endfor %}
+          <!-- Add more rows dynamically here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>

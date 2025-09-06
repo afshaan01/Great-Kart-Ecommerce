@@ -1,0 +1,29 @@
+<!-- payment/success.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="alert alert-success">
+        <h4 class="alert-heading">Payment Successful!</h4>
+        <p>Thank you for your order #{{ order.order_number }}. Your payment has been processed successfully.</p>
+        <hr>
+        <p class="mb-0">
+            <a href="{% url 'download_receipt' order.order_number %}" class="btn btn-primary">
+                Download Receipt
+            </a>
+            {% comment %} <a href="{% url 'order_history' %}" class="btn btn-secondary">
+                View Order History
+            </a> {% endcomment %}
+        </p>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h5>Order Summary</h5>
+        </div>
+        <div class="card-body">
+            <!-- Display order summary similar to your orderdetails.html -->
+        </div>
+    </div>
+</div>
+{% endblock %}
